@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.11
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 25, 2023 at 07:24 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Nov 17, 2023 at 04:48 AM
+-- Server version: 5.7.43-cll-lve
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,6 +21,176 @@ SET time_zone = "+00:00";
 --
 -- Database: `employeeigniter`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `anniversary_tbl`
+--
+
+CREATE TABLE `anniversary_tbl` (
+  `id` int(11) NOT NULL,
+  `staff_name` varchar(150) NOT NULL,
+  `doj` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `anniversary_tbl`
+--
+
+INSERT INTO `anniversary_tbl` (`id`, `staff_name`, `doj`) VALUES
+(12, 'George J Barnes', '2023-10-27'),
+(16, 'Steven Askew', '2023-10-30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assets`
+--
+
+CREATE TABLE `assets` (
+  `id` int(14) NOT NULL,
+  `ass_name` varchar(256) DEFAULT NULL,
+  `ass_brand` varchar(128) DEFAULT NULL,
+  `ass_model` varchar(256) DEFAULT NULL,
+  `ass_code` varchar(256) DEFAULT NULL,
+  `configuration` varchar(512) DEFAULT NULL,
+  `purchasing_date` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `assets`
+--
+
+INSERT INTO `assets` (`id`, `ass_name`, `ass_brand`, `ass_model`, `ass_code`, `configuration`, `purchasing_date`) VALUES
+(0, 'HP Laptop', 'HP series', 'core i3 10 generation', 'PTS0001', 'Intel® Core™ i3 Processor N-series', '2023-11-17'),
+(4, 'HP Laptop Note Book', 'HP series', 'core i7 10 generation', 'PTS0001', 'PTS Assets Details\r\nHP Laptop\r\nCore i7 10 generation', '2023-11-16'),
+(6, 'Sony Laptop Note Book', 'Sony', 'core i3 10 generation', 'PTS0003', 'a. To check the configuration of your laptop, press the \"Windows\" key and type \"System\" in the search bar, then select \"System\" from the search results. b. Here, you can see information such as the processor, installed RAM (memory), system type (32-bit or 64-bit), and other specifications.', '2023-11-18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assets_category`
+--
+
+CREATE TABLE `assets_category` (
+  `id` int(14) NOT NULL,
+  `cat_status` enum('ASSETS','LOGISTIC') NOT NULL DEFAULT 'ASSETS',
+  `cat_name` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `assets_category`
+--
+
+INSERT INTO `assets_category` (`id`, `cat_status`, `cat_name`) VALUES
+(0, 'ASSETS', 'Mobile'),
+(2, 'ASSETS', 'Computer'),
+(3, 'ASSETS', 'Laptop'),
+(4, 'LOGISTIC', 'tab'),
+(5, 'ASSETS', 'Computer'),
+(8, 'ASSETS', 'iphone 15'),
+(9, 'ASSETS', 'Computer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance_tbl`
+--
+
+CREATE TABLE `attendance_tbl` (
+  `id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `staff_id` int(11) NOT NULL,
+  `txtreason` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `check_in` time NOT NULL,
+  `check_out` time NOT NULL,
+  `applied_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `attendance_tbl`
+--
+
+INSERT INTO `attendance_tbl` (`id`, `date`, `staff_id`, `txtreason`, `status`, `check_in`, `check_out`, `applied_on`) VALUES
+(1, '2023-09-28 00:00:00', 2, 'Late', 1, '10:00:19', '18:30:00', '2023-09-27'),
+(9, '2023-09-24 00:00:00', 2, 'no reason', 0, '16:28:00', '14:31:00', '2023-09-28'),
+(10, '2023-09-10 00:00:00', 2, 'no reason', 0, '14:38:00', '17:35:00', '2023-09-28'),
+(11, '2023-09-29 00:00:00', 2, 'no reason', 0, '12:48:00', '14:46:00', '2023-09-29'),
+(14, '2023-10-02 00:00:00', 3, 'no reason', 0, '10:34:00', '18:35:00', '2023-10-25'),
+(15, '2023-10-26 00:00:00', 3, '-', 0, '10:35:00', '18:35:00', '2023-10-25'),
+(16, '2023-10-31 00:00:00', 3, 'late', 0, '10:35:00', '18:35:00', '2023-10-30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `birthday_tbl`
+--
+
+CREATE TABLE `birthday_tbl` (
+  `id` int(11) NOT NULL,
+  `staff_name` varchar(150) NOT NULL,
+  `dob` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `birthday_tbl`
+--
+
+INSERT INTO `birthday_tbl` (`id`, `staff_name`, `dob`) VALUES
+(1, 'Samuel Huntsman', '2023-10-13'),
+(24, 'Sufiyan Mohammed Yaseen', '1989-07-20'),
+(25, 'Fauwaaz', '2023-10-28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch_tbl`
+--
+
+CREATE TABLE `branch_tbl` (
+  `id` int(11) NOT NULL,
+  `branch_name` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `branch_tbl`
+--
+
+INSERT INTO `branch_tbl` (`id`, `branch_name`, `address`, `added_on`) VALUES
+(0, 'Nashik', 'Dawarka Circle Nashik', '2023-11-17 11:46:33'),
+(7, 'Mumbai Office', 'Unit 1, Building, no. 2, Millennium Business Park, MIDC Industrial Area, Sector 1, Mahape, Navi Mumbai, Maharashtra - 400710', '2023-11-02 05:43:23'),
+(8, 'Pune Office', 'First Floor , Madhuvant, Plot #7, Rajyog, Near KFC, Opp FabIndia, Baner, Pune - 411045', '2023-11-02 05:43:12'),
+(9, 'Bengaluru Office', 'Office no. 593, First floor, 6th Cross, 10th Main, Jeevan Bima Nagar, Main Road, Bengaluru - 560075', '2023-11-02 05:37:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coff_tbl`
+--
+
+CREATE TABLE `coff_tbl` (
+  `id` int(11) NOT NULL,
+  `staff_id` int(11) NOT NULL,
+  `coff_from` date NOT NULL,
+  `coff_to` date NOT NULL,
+  `txtreason` varchar(90) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `applied_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `coff_tbl`
+--
+
+INSERT INTO `coff_tbl` (`id`, `staff_id`, `coff_from`, `coff_to`, `txtreason`, `description`, `status`, `applied_on`) VALUES
+(3, 3, '2023-10-24', '2023-10-24', 'no reason', '-', 1, '2023-10-23'),
+(4, 3, '2023-10-24', '2023-10-25', 'sick', '-', 2, '2023-10-23'),
+(5, 3, '2023-10-28', '2023-10-28', 'no reason', '-', 1, '2023-10-23');
 
 -- --------------------------------------------------------
 
@@ -294,7 +465,7 @@ INSERT INTO `country_tbl` (`id`, `country_code`, `country_name`) VALUES
 CREATE TABLE `department_tbl` (
   `id` int(11) NOT NULL,
   `department_name` varchar(100) NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -302,6 +473,7 @@ CREATE TABLE `department_tbl` (
 --
 
 INSERT INTO `department_tbl` (`id`, `department_name`, `added_on`) VALUES
+(0, 'Fiber Optical', '2023-11-17 11:34:49'),
 (1, 'HR Department', '2023-09-14 11:31:35'),
 (2, 'SAP Technical Department', '2023-09-14 11:31:56'),
 (3, 'Graphic Designing', '2023-09-14 11:32:12'),
@@ -309,7 +481,35 @@ INSERT INTO `department_tbl` (`id`, `department_name`, `added_on`) VALUES
 (5, 'Digital Marketing', '2023-09-14 11:33:35'),
 (6, 'Accountant Department', '2023-09-14 11:34:05'),
 (7, 'Web Development Department', '2023-09-14 11:32:33'),
-(8, 'SAP Functional', '2023-09-14 11:30:15');
+(8, 'SAP Functional', '2023-09-14 11:30:15'),
+(13, 'SEO Department', '2023-10-30 10:57:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `holiday_tbl`
+--
+
+CREATE TABLE `holiday_tbl` (
+  `id` int(11) NOT NULL,
+  `holiday_name` varchar(256) DEFAULT NULL,
+  `from_date` varchar(64) DEFAULT NULL,
+  `to_date` varchar(64) DEFAULT NULL,
+  `number_of_days` varchar(64) DEFAULT NULL,
+  `year` varchar(64) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `holiday_tbl`
+--
+
+INSERT INTO `holiday_tbl` (`id`, `holiday_name`, `from_date`, `to_date`, `number_of_days`, `year`) VALUES
+(8, 'Saint Patrick\'s Day', '2021-03-17', '2021-03-17', '0', '03-2021'),
+(11, 'DIwali', '2023-11-12', '2023-11-15', '4', '2023-11'),
+(13, 'Holi', '2023-03-07', '2023-03-07', '1', '2023-03'),
+(14, 'Independence', '2023-08-15', '2023-08-15', '1', '2023-08'),
+(15, 'Independence Day', '2023-08-15', '2023-08-15', '1', '2023-08'),
+(16, 'Independence Day', '2023-08-15', '2023-08-15', '1', '2023-08');
 
 -- --------------------------------------------------------
 
@@ -320,9 +520,10 @@ INSERT INTO `department_tbl` (`id`, `department_name`, `added_on`) VALUES
 CREATE TABLE `leave_tbl` (
   `id` int(11) NOT NULL,
   `staff_id` int(11) NOT NULL,
+  `leave-type` varchar(50) NOT NULL,
   `leave_reason` varchar(90) NOT NULL,
   `description` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
   `leave_from` date NOT NULL,
   `leave_to` date NOT NULL,
   `updated_on` date NOT NULL,
@@ -333,15 +534,21 @@ CREATE TABLE `leave_tbl` (
 -- Dumping data for table `leave_tbl`
 --
 
-INSERT INTO `leave_tbl` (`id`, `staff_id`, `leave_reason`, `description`, `status`, `leave_from`, `leave_to`, `updated_on`, `applied_on`) VALUES
-(1, 2, 'Sick', 'Not feeling well enough to join', 1, '2021-01-15', '2021-01-17', '0000-00-00', '2021-01-15'),
-(2, 5, 'Casual Leave', 'been working for full hours since last month, got to free my mind for few days', 1, '2021-05-28', '2021-05-29', '0000-00-00', '2021-05-27'),
-(3, 6, 'Day Off', 'Requesting for a day off as I need to join my pal\'s wedding!', 1, '2021-05-28', '2021-05-29', '0000-00-00', '2021-05-27'),
-(4, 3, 'Casual Leave', 'for vacation, rest, and family events', 2, '2021-05-30', '2021-06-06', '0000-00-00', '2021-05-27'),
-(5, 9, 'Quarantine', 'i need to quarantine myself for few weeks as i got some symptoms of covid-19', 1, '2021-05-28', '2021-06-11', '0000-00-00', '2021-05-27'),
-(6, 5, 'Personal Reason', 'Leave for my Openions', 0, '2023-09-18', '2023-09-18', '0000-00-00', '2023-09-07'),
-(7, 5, 'Personal Reason', 'Personal reason', 0, '2023-09-19', '2023-09-20', '0000-00-00', '2023-09-12'),
-(8, 5, 'Personal Reason', '', 0, '2023-09-23', '0000-00-00', '0000-00-00', '2023-09-23');
+INSERT INTO `leave_tbl` (`id`, `staff_id`, `leave-type`, `leave_reason`, `description`, `status`, `leave_from`, `leave_to`, `updated_on`, `applied_on`) VALUES
+(1, 2, '', 'Sick', 'Not feeling well enough to join', 1, '2021-01-15', '2021-01-17', '0000-00-00', '2021-01-15'),
+(2, 5, '', 'Casual Leave', 'been working for full hours since last month, got to free my mind for few days', 1, '2021-05-28', '2021-05-29', '0000-00-00', '2021-05-27'),
+(3, 6, '', 'Day Off', 'Requesting for a day off as I need to join my pal\'s wedding!', 1, '2021-05-28', '2021-05-29', '0000-00-00', '2021-05-27'),
+(4, 3, '', 'Casual Leave', 'for vacation, rest, and family events', 1, '2021-05-30', '2021-06-06', '0000-00-00', '2021-05-27'),
+(5, 9, '', 'Quarantine', 'i need to quarantine myself for few weeks as i got some symptoms of covid-19', 1, '2021-05-28', '2021-06-11', '0000-00-00', '2021-05-27'),
+(6, 5, '', 'Personal Reason', 'Leave for my Openions', 1, '2023-09-18', '2023-09-18', '0000-00-00', '2023-09-07'),
+(7, 5, '', 'Personal Reason', 'Personal reason', 2, '2023-09-19', '2023-09-20', '0000-00-00', '2023-09-12'),
+(8, 5, '', 'Personal Reason', '', 2, '2023-09-23', '0000-00-00', '0000-00-00', '2023-09-23'),
+(9, 3, '', 'sick', '-', 2, '2023-10-20', '2023-10-20', '0000-00-00', '2023-10-16'),
+(10, 3, '', 'no reason', '-', 2, '2023-10-24', '2023-10-24', '0000-00-00', '2023-10-23'),
+(11, 3, '', 'sick', '', 1, '2023-10-31', '2023-10-31', '0000-00-00', '2023-10-30'),
+(12, 3, '', 'sick', '-', 1, '2023-10-31', '2023-10-31', '0000-00-00', '2023-10-30'),
+(13, 5, 'pl', 'Personal Reason', 'Testing', 1, '2023-11-04', '2023-11-04', '0000-00-00', '2023-11-01'),
+(14, 5, 'LWP (Leave With Pay)', 'Personal Reason', 'Testing For Leave Type', 1, '2023-11-06', '2023-11-06', '0000-00-00', '2023-11-01');
 
 -- --------------------------------------------------------
 
@@ -354,7 +561,7 @@ CREATE TABLE `login_tbl` (
   `username` varchar(80) NOT NULL,
   `password` varchar(80) NOT NULL,
   `usertype` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1
+  `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -363,7 +570,6 @@ CREATE TABLE `login_tbl` (
 
 INSERT INTO `login_tbl` (`id`, `username`, `password`, `usertype`, `status`) VALUES
 (1, 'admin', '12345', 1, 1),
-(2, 'steven@gmail.com', '7444440001', 2, 1),
 (3, 'tatiana@gmail.com', '7402222220', 2, 1),
 (4, 'christine@gmail.com', '8888877777', 2, 1),
 (5, 'liam@gmail.com', '7410233333', 2, 1),
@@ -371,7 +577,30 @@ INSERT INTO `login_tbl` (`id`, `username`, `password`, `usertype`, `status`) VAL
 (7, 'samuel@gmail.com', '7410000010', 2, 1),
 (8, 'markh@gmail.com', '7070707069', 2, 1),
 (9, 'angela@gmail.com', '7417417417', 2, 1),
-(10, 'sufiyan.yaseen@ptssystems.co.in', '9273527059', 1, 1);
+(10, 'sufiyan.yaseen@ptssystems.co.in', '12345', 2, 1),
+(13, 'fauwaaz@ptssystems.co.in', '8369910962', 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notice_tbl`
+--
+
+CREATE TABLE `notice_tbl` (
+  `id` int(11) NOT NULL,
+  `txtnotice` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `noticedesc` text NOT NULL,
+  `dop` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notice_tbl`
+--
+
+INSERT INTO `notice_tbl` (`id`, `txtnotice`, `noticedesc`, `dop`) VALUES
+(16, 'PTS Annual Ceremoney', '1. Client should have appropriate test credentials.\r\n\r\n2. Client id ApiIntegrationNew should be passed in API authentication request.\r\n\r\n3. Client should have all Url’s and understanding of API methods.\r\n\r\n4. Startup Meeting with API team before integration after going through with the document.\r\n\r\n5. In between integration follow the sample verification process.', '2023-10-31'),
+(17, 'Dear All Please submit the Data', 'As per recent updates in Mediclaim, we can add only one family member(Spouse or Children). \r\nIf employee is bachelor, he/she needs to be given self-details only.\r\n\r\nThe details as below,\r\nName\r\nRelation\r\nAge\r\nDate of Birth\r\nAadhar Card Number\r\nKindly share the above details by Tomorrow first half.', '2023-10-28'),
+(19, 'Festival Diwali', 'Traditional day', '2023-11-10');
 
 -- --------------------------------------------------------
 
@@ -384,26 +613,33 @@ CREATE TABLE `salary_tbl` (
   `staff_id` int(11) NOT NULL,
   `basic_salary` bigint(20) NOT NULL,
   `allowance` bigint(20) NOT NULL,
+  `hra` bigint(20) NOT NULL,
+  `conveyance` bigint(20) NOT NULL,
+  `medical` int(20) NOT NULL,
   `total` bigint(20) NOT NULL,
+  `month_slip` varchar(20) NOT NULL,
+  `year_slip` varchar(11) NOT NULL,
   `added_by` int(11) NOT NULL,
   `updated_on` date NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `salary_tbl`
 --
 
-INSERT INTO `salary_tbl` (`id`, `staff_id`, `basic_salary`, `allowance`, `total`, `added_by`, `updated_on`, `added_on`) VALUES
-(1, 2, 14000, 0, 14000, 1, '0000-00-00', '2021-05-02 08:23:30'),
-(2, 3, 9100, 300, 9400, 1, '0000-00-00', '2021-04-28 02:39:23'),
-(3, 4, 4950, 0, 4950, 1, '0000-00-00', '2021-04-30 07:38:02'),
-(4, 5, 6100, 250, 6350, 1, '0000-00-00', '2021-04-30 13:57:02'),
-(5, 9, 4750, 190, 4940, 1, '0000-00-00', '2021-05-27 17:31:05'),
-(6, 5, 20000, 5000, 25000, 10, '0000-00-00', '2023-09-12 10:05:06'),
-(7, 3, 450000, 170000, 620000, 10, '0000-00-00', '2023-09-14 11:37:40'),
-(8, 6, 40000, 15000, 55000, 10, '0000-00-00', '2023-09-14 11:37:41'),
-(9, 8, 30000, 13000, 43000, 10, '0000-00-00', '2023-09-14 11:37:41');
+INSERT INTO `salary_tbl` (`id`, `staff_id`, `basic_salary`, `allowance`, `hra`, `conveyance`, `medical`, `total`, `month_slip`, `year_slip`, `added_by`, `updated_on`, `added_on`) VALUES
+(0, 2, 21000, 3500, 6300, 1000, 1200, 33000, 'October', '2023', 1, '0000-00-00', '2023-11-17 11:43:53'),
+(12, 12, 15000, 5000, 0, 0, 0, 20000, '0000-00-00', '0', 1, '0000-00-00', '2023-10-13 10:35:02'),
+(36, 10, 21000, 3500, 6300, 1000, 1200, 33000, 'January', '2023', 1, '0000-00-00', '2023-11-02 13:14:15'),
+(38, 2, 21000, 3500, 6300, 1000, 1200, 33000, 'January', '2023', 1, '0000-00-00', '2023-11-03 07:30:26'),
+(39, 5, 21000, 3500, 6300, 1000, 1200, 33000, 'November', '2021', 1, '0000-00-00', '2023-11-03 07:31:11'),
+(40, 7, 21000, 170000, 6300, 1000, 1200, 20400, 'November', '2021', 1, '0000-00-00', '2023-11-03 07:32:16'),
+(43, 10, 21000, 3500, 6300, 1000, 1200, 33000, 'February', '2023', 1, '0000-00-00', '2023-11-03 11:37:47'),
+(44, 10, 21000, 3500, 6300, 1000, 1200, 33000, 'March', '2023', 1, '0000-00-00', '2023-11-03 11:38:05'),
+(45, 3, 21000, 3500, 6300, 1000, 1200, 33000, '', '', 1, '0000-00-00', '2023-11-06 10:40:28'),
+(46, 10, 21000, 3500, 6300, 1000, 1200, 33000, 'April', '2023', 1, '0000-00-00', '2023-11-06 10:54:39'),
+(47, 1, 21000, 3500, 6300, 1000, 1200, 33000, 'November', '2023', 1, '0000-00-00', '2023-11-11 11:25:40');
 
 -- --------------------------------------------------------
 
@@ -414,12 +650,26 @@ INSERT INTO `salary_tbl` (`id`, `staff_id`, `basic_salary`, `allowance`, `total`
 CREATE TABLE `staff_tbl` (
   `id` int(11) NOT NULL,
   `staff_name` varchar(150) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `mname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
   `gender` varchar(10) NOT NULL,
   `email` varchar(150) NOT NULL,
   `mobile` bigint(20) NOT NULL,
+  `jobtitle` varchar(255) NOT NULL,
+  `slcposition` varchar(255) NOT NULL,
+  `slcbranch` varchar(255) NOT NULL,
+  `txtmanager` varchar(255) NOT NULL,
+  `empcode` int(11) NOT NULL,
+  `slcemptype` varchar(255) NOT NULL,
   `dob` date NOT NULL,
   `doj` date NOT NULL,
-  `address` text DEFAULT NULL,
+  `txtstreet` varchar(255) NOT NULL,
+  `streetno` int(10) NOT NULL,
+  `txtblock` int(10) NOT NULL,
+  `hzipcode` int(10) NOT NULL,
+  `address` text,
+  `locaddress` varchar(255) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
   `state` varchar(100) NOT NULL,
   `country` varchar(50) NOT NULL,
@@ -427,27 +677,94 @@ CREATE TABLE `staff_tbl` (
   `pic` varchar(150) NOT NULL DEFAULT 'default-pic.jpg',
   `added_by` int(11) NOT NULL,
   `updated_on` date NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `shift` varchar(255) NOT NULL,
+  `start_date` date NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `terminate_date` date DEFAULT NULL,
+  `terminate_reason` varchar(255) NOT NULL,
+  `maritial_status` varchar(20) NOT NULL,
+  `no_of_child` int(20) NOT NULL,
+  `adhaar_no` int(20) NOT NULL,
+  `pan_no` varchar(20) NOT NULL,
+  `father_name` varchar(255) NOT NULL,
+  `citizen` varchar(20) NOT NULL,
+  `nominee_name` varchar(255) NOT NULL,
+  `nominee_relation` varchar(20) NOT NULL,
+  `emergency_no` bigint(20) NOT NULL,
+  `salary` int(20) NOT NULL,
+  `bank_name` varchar(255) NOT NULL,
+  `account_no` int(20) NOT NULL,
+  `ifsc_code` int(20) NOT NULL,
+  `pf_no` int(20) NOT NULL,
+  `esic_no` int(20) NOT NULL,
+  `adhaar_photo` int(15) DEFAULT NULL,
+  `pan_photo` int(15) DEFAULT NULL,
+  `passport_photo` int(15) DEFAULT NULL,
+  `ssc_result_photo` int(15) DEFAULT NULL,
+  `hsc_result_photo` int(15) DEFAULT NULL,
+  `diploma_result_photo` int(15) DEFAULT NULL,
+  `graduate_result_photo` int(15) DEFAULT NULL,
+  `pgraduate_result_photo` int(15) DEFAULT NULL,
+  `offer_letter` int(15) DEFAULT NULL,
+  `relieving_letter` int(15) DEFAULT NULL,
+  `experience_letter` int(15) DEFAULT NULL,
+  `others` int(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `staff_tbl`
 --
 
-INSERT INTO `staff_tbl` (`id`, `staff_name`, `gender`, `email`, `mobile`, `dob`, `doj`, `address`, `city`, `state`, `country`, `department_id`, `pic`, `added_by`, `updated_on`, `added_on`) VALUES
-(2, 'Steven Askew', 'Male', 'steven@gmail.com', 7444440001, '1990-02-18', '2020-11-27', '3721  Hill Croft Farm Road', 'BURLINGTON', 'MI', 'United States', 1, 'smportrait.jpg', 0, '0000-00-00', '2021-05-27 15:37:03'),
-(3, 'Tatiana Breit', 'Female', 'tatiana@gmail.com', 7402222220, '1994-10-14', '2021-02-21', '3397  Happy Hollow Road', 'Jacksonville', 'NC', 'United States', 2, 'prtwm.jpg', 0, '0000-00-00', '2021-05-27 15:37:16'),
-(4, 'Christine Moore', 'Female', 'christine@gmail.com', 8888877777, '1994-08-01', '2020-01-15', '4047  Timbercrest Road', 'Anchorage', 'AK', 'United States', 3, 'christen-freeimg.jpg', 0, '0000-00-00', '2021-05-27 15:31:20'),
-(5, 'Liam Moore', 'Male', 'liam@gmail.com', 7410233333, '1994-12-02', '2021-04-04', '3474  Viking Drive', 'Worthington', 'OH', 'United States', 4, '7002489_preview.jpg', 1, '0000-00-00', '2021-05-27 13:55:22'),
-(6, 'George J Barnes', 'Male', 'barnes@gmail.com', 1010101010, '1988-02-03', '2021-01-13', '3079  Chardonnay Drive', 'Ocala', 'FL', 'United States', 2, 'skport.jpg', 1, '0000-00-00', '2021-05-27 15:28:48'),
-(7, 'Samuel Huntsman', 'Male', 'samuel@gmail.com', 7410000010, '1991-12-28', '2021-04-25', '2315  Cherry Tree Drive', 'Jacksonville', 'FL', 'United States', 5, 'dportrait.jpg', 1, '0000-00-00', '2021-05-27 16:52:18'),
-(8, 'Mark Heiden', 'Male', 'markh@gmail.com', 7070707069, '1990-02-12', '2021-02-04', '2190  Laurel Lane', 'Midland', 'TX', 'United States', 2, 'pauptr.jpg', 1, '0000-00-00', '2021-05-27 16:53:57'),
-(9, 'Angela Bridges', 'Female', 'angela@gmail.com', 7417417417, '1992-02-11', '2021-03-05', '3538 Melville Street', 'Jackson', 'TN', 'United States', 6, 'sm-freeimg.jpg', 1, '0000-00-00', '2021-05-27 17:29:36'),
-(10, 'Sufiyan Mohammed Yaseen', 'Male', 'sufiyan.yaseen@ptssystems.co.in', 9273527059, '1989-07-20', '2022-07-18', 'mahape\r\nnavi mumbai', 'navi mumbai', 'Maharashtra', 'India', 7, 'Group_1511.png', 1, '0000-00-00', '2023-09-07 08:10:21');
+INSERT INTO `staff_tbl` (`id`, `staff_name`, `fname`, `mname`, `lname`, `gender`, `email`, `mobile`, `jobtitle`, `slcposition`, `slcbranch`, `txtmanager`, `empcode`, `slcemptype`, `dob`, `doj`, `txtstreet`, `streetno`, `txtblock`, `hzipcode`, `address`, `locaddress`, `city`, `state`, `country`, `department_id`, `pic`, `added_by`, `updated_on`, `added_on`, `shift`, `start_date`, `status`, `terminate_date`, `terminate_reason`, `maritial_status`, `no_of_child`, `adhaar_no`, `pan_no`, `father_name`, `citizen`, `nominee_name`, `nominee_relation`, `emergency_no`, `salary`, `bank_name`, `account_no`, `ifsc_code`, `pf_no`, `esic_no`, `adhaar_photo`, `pan_photo`, `passport_photo`, `ssc_result_photo`, `hsc_result_photo`, `diploma_result_photo`, `graduate_result_photo`, `pgraduate_result_photo`, `offer_letter`, `relieving_letter`, `experience_letter`, `others`) VALUES
+(1, 'Tatiana Breit', 'Tatiana', 'Briet', '', 'Female', 'tatiana@gmail.com', 7402222220, 'Accounts', '', '', '', 0, '', '1994-10-11', '2021-02-28', '', 0, 0, 41009929, '3397  Happy Hollow Road', 'Mumbai', 'Jacksonville', 'NC', 'United States', 2, 'christen-freeimg.jpg', 1, '0000-00-00', '2023-11-03 10:21:53', 'General', '0000-00-00', 0, '0000-00-00', '', '', 0, 0, '', 'TEST', 'indian', 'TEST', 'Sister', 45678123, 0, '', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'Fauwaaz Shaikh', 'Fauwaaz', 'Mohammed', 'Shaikh', 'Male', 'fauwaaz@ptssystems.co.in', 8369910965, 'Web Developer', '', '', '', 0, '', '1999-11-19', '0000-00-00', 'karan jaded ', 6, 16, 410206, NULL, 'Mumbai', '1', 'Maharashtra', 'India', 7, 'User1.png', 1, '0000-00-00', '2023-11-06 05:16:28', 'General', '2023-04-10', 0, '2023-12-31', '---', 'Single', 0, 0, '', 'Ashraf', 'Indian', 'Faiz', 'Brother', 12345677, 0, '', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `anniversary_tbl`
+--
+ALTER TABLE `anniversary_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `assets`
+--
+ALTER TABLE `assets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `assets_category`
+--
+ALTER TABLE `assets_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attendance_tbl`
+--
+ALTER TABLE `attendance_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `birthday_tbl`
+--
+ALTER TABLE `birthday_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `branch_tbl`
+--
+ALTER TABLE `branch_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coff_tbl`
+--
+ALTER TABLE `coff_tbl`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `country_tbl`
@@ -459,6 +776,12 @@ ALTER TABLE `country_tbl`
 -- Indexes for table `department_tbl`
 --
 ALTER TABLE `department_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `holiday_tbl`
+--
+ALTER TABLE `holiday_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -474,15 +797,15 @@ ALTER TABLE `login_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `salary_tbl`
+-- Indexes for table `notice_tbl`
 --
-ALTER TABLE `salary_tbl`
+ALTER TABLE `notice_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `staff_tbl`
+-- Indexes for table `salary_tbl`
 --
-ALTER TABLE `staff_tbl`
+ALTER TABLE `salary_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -490,40 +813,10 @@ ALTER TABLE `staff_tbl`
 --
 
 --
--- AUTO_INCREMENT for table `country_tbl`
+-- AUTO_INCREMENT for table `attendance_tbl`
 --
-ALTER TABLE `country_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
-
---
--- AUTO_INCREMENT for table `department_tbl`
---
-ALTER TABLE `department_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `leave_tbl`
---
-ALTER TABLE `leave_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `login_tbl`
---
-ALTER TABLE `login_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `salary_tbl`
---
-ALTER TABLE `salary_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `staff_tbl`
---
-ALTER TABLE `staff_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `attendance_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
